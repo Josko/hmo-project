@@ -20,6 +20,8 @@ public class Main {
 		
 		final State state = input.ReadAll();
 		
+		state.CalculateDistances();
+		
 		final OutputFormatWriter output = new OutputFormatWriter(new File(args[1]));
 		
 		output.WriteAll(state);

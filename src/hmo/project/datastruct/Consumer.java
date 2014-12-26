@@ -4,8 +4,8 @@ public class Consumer {
 	
 	private static final long serialVersionUID = 1669934855238885989L;
 	
-	final private int x;
-	final private int y;
+	final public int x;
+	final public int y;
 	final private int name;
 	
 	private int resourcesNeeded;

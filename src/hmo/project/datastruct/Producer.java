@@ -4,8 +4,8 @@ public class Producer {
 	
 	private static final long serialVersionUID = 349426006838552905L;
 	
-	final private int x;
-	final private int y;
+	final public int x;
+	final public int y;
 	final private int name;
 	
 	private int capacity;
