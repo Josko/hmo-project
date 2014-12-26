@@ -44,6 +44,6 @@ public class Vehicle {
 	}
 	
 	public String toString() {
-		return "DeliveryVehicle(" + origin + ", " + numberOfDestinations + ")";
+		return "Vehicle(" + origin + ", " + numberOfDestinations + ")";
 	}
 }
