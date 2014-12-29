@@ -39,12 +39,12 @@ public class State {
 			int yOffset = 0;
 			
 			for (final Producer producer2 : producers) {
-				this.distance[xOffset][yOffset] = Math.sqrt(Math.pow(producer.x - producer2.x, 2) + Math.pow(producer.y - producer2.y,2));
+				this.distance[xOffset][yOffset] = Math.sqrt(Math.pow(producer.x - producer2.x, 2) + Math.pow(producer.y - producer2.y, 2));
 				++yOffset;
 			}
 			
 			for (final Consumer consumer : consumers) {
-				this.distance[xOffset][yOffset] = Math.sqrt(Math.pow(producer.x - consumer.x, 2) + Math.pow(producer.y - consumer.y,2));
+				this.distance[xOffset][yOffset] = Math.sqrt(Math.pow(producer.x - consumer.x, 2) + Math.pow(producer.y - consumer.y, 2));
 				++yOffset;
 			}
 			
@@ -55,12 +55,12 @@ public class State {
 			int yOffset = 0;
 			
 			for (final Producer producer : producers) {
-				this.distance[xOffset][yOffset] = Math.sqrt(Math.pow(producer.x - consumer.x, 2) + Math.pow(producer.y - consumer.y,2));
+				this.distance[xOffset][yOffset] = Math.sqrt(Math.pow(producer.x - consumer.x, 2) + Math.pow(producer.y - consumer.y, 2));
 				++yOffset;
 			}
 			
 			for (final Consumer consumer2 : consumers) {
-				this.distance[xOffset][yOffset] = Math.sqrt(Math.pow(consumer2.x - consumer.x, 2) + Math.pow(consumer2.y - consumer.y,2));
+				this.distance[xOffset][yOffset] = Math.sqrt(Math.pow(consumer2.x - consumer.x, 2) + Math.pow(consumer2.y - consumer.y, 2));
 				++yOffset;
 			}
 			
