@@ -48,7 +48,7 @@ public class InputFormatReader {
 			final int x = Integer.parseInt(coordinates[0]);
 			final int y = Integer.parseInt(coordinates[1]);
 			
-			consumers[i] = new Consumer(i + 1, x, y);
+			consumers[i] = new Consumer(i, x, y);
 		}		
 		
 		input.nextLine();
