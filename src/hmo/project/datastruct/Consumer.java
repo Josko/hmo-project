@@ -23,6 +23,10 @@ public class Consumer {
 		this.y = y;
 	}
 	
+	public int getResourcesNeeded() {
+		return this.resourcesNeeded;
+	}
+	
 	public void SetResourcesNeeded(final int resorucesNeeded) {
 		this.resourcesNeeded = resorucesNeeded;
 	}

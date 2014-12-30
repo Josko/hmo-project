@@ -7,7 +7,8 @@ public class SimpleCrossover implements CrossoverOperator {
 	@Override
 	public Individual doCrossover(Individual parent1, Individual parent2) {
 		Individual child = new Individual(parent1.elements.length,
-				parent1.maxValue);
+				parent1.maxValue, parent1.vehicles, parent1.consumers,
+				parent1.distance);
 
 		Random random = new Random();
 

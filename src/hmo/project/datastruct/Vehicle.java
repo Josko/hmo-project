@@ -22,6 +22,10 @@ public class Vehicle {
 		this.capacity = capacity;
 	}
 	
+	public int getCapacity() {
+		return this.capacity;
+	}
+	
 	public double GetCost() {
 		if (numberOfDestinations == 0)
 			return 0;

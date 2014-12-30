@@ -1,9 +1,18 @@
 package hmo.project.ga;
 
+import hmo.project.datastruct.Consumer;
+import hmo.project.datastruct.Vehicle;
+import hmo.project.input.InputFormatReader;
+import hmo.project.state.State;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class Algorithm {
 
@@ -23,8 +32,18 @@ public class Algorithm {
 	private double bestFitness = Double.MAX_VALUE;
 	private Individual bestIndividual;
 
-	public Algorithm(int noCities, int noTrucks, int populationSize,
-			int evaluations, double mutationProb, int tournamentSize) {
+	private final Vehicle[] vehicles;
+	private final Consumer[] consumers;
+	private final double[][] distance;
+
+	public Algorithm(final Vehicle[] vehicles, final Consumer[] consumers,
+			double[][] distance, int noCities, int noTrucks,
+			int populationSize, int evaluations, double mutationProb,
+			int tournamentSize) {
+		this.vehicles = vehicles;
+		this.consumers = consumers;
+		this.distance = distance;
+
 		this.noCities = noCities;
 		this.noTrucks = noTrucks;
 
@@ -37,13 +56,16 @@ public class Algorithm {
 		this.crossoverOperators = new LinkedList<CrossoverOperator>();
 		this.crossoverOperators.add(new SimpleCrossover());
 		this.mutationOperators = new LinkedList<MutationOperator>();
-		this.mutationOperators.add(new SimpleMutation(this.mutationProb, this.noTrucks));
+		this.mutationOperators.add(new SimpleMutation(this.mutationProb,
+				this.noTrucks));
 	}
 
 	public void init() {
 		for (int i = 0; i < populationSize; i++) {
-			this.population.add(new Individual(noCities, noTrucks));
-			if (this.population.get(i).getFitness() < this.bestFitness) {
+			this.population.add(new Individual(noCities, noTrucks, vehicles,
+					consumers, distance));
+			if (this.bestIndividual == null
+					|| this.population.get(i).getFitness() < this.bestFitness) {
 				this.bestFitness = this.population.get(i).getFitness();
 				this.bestIndividual = this.population.get(i);
 			}
@@ -117,12 +139,29 @@ public class Algorithm {
 		return bestIndividual;
 	}
 
-	public static void main(String[] args) {
-		Algorithm alg = new Algorithm(100, 20, 300, 1000000, 0.3, 3);
+	public static void main(String[] args) throws IOException {
+
+		final InputFormatReader input = new InputFormatReader(new File(
+				"HMO-projekt_instanca_problema.txt"));
+
+		final State state = input.ReadAll();
+
+		state.CalculateDistances();
+		Algorithm alg = new Algorithm(state.vehicles, state.consumers,
+				state.distance, 100, 53, 500, 1000000, 0.3, 3);
 		alg.init();
 		alg.run();
 		System.out.println(alg.getBestIndividual());
 		System.out.println(alg.getBestIndividual().getFitness());
+		
+		final Set<Integer> distinctValues = new HashSet<Integer>();
+		
+		for (int i = 0; i < alg.getBestIndividual().elements.length; i++) {
+			distinctValues.add(alg.getBestIndividual().elements[i]);
+		}
+		
+		System.out.println(distinctValues + " " + distinctValues.size());
+		
 	}
 
 }
