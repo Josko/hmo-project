@@ -25,7 +25,7 @@ public class SolutionDecoder {
 		this.distance = distance;
 	}
 
-	public Solution decode(Individual ind) {
+	public Solution decode(final Individual ind, final int[] warehouses) {
 		final Map<Integer, List<Integer>> pathAssignment = new HashMap<Integer, List<Integer>>();
 		final Map<Integer, Integer> warehouseAssignment = new HashMap<Integer, Integer>();
 		
@@ -38,10 +38,10 @@ public class SolutionDecoder {
 		}
 
 		final Map<Integer, Integer> usedProducers = new HashMap<Integer, Integer>();
-		usedProducers.put(0, producers[0].GetCapacity());
-		usedProducers.put(3, producers[3].GetCapacity());
-		usedProducers.put(4, producers[4].GetCapacity());
-
+		for (int i = 0; i < warehouses.length; i++) {
+			usedProducers.put(warehouses[i], producers[warehouses[i]].GetCapacity());
+		}
+		
 		for (Integer vehicle : pathAssignment.keySet()) {
 			final List<Integer> cycle = getBestCycle(pathAssignment
 					.get(vehicle));

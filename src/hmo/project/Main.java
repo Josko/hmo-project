@@ -27,7 +27,7 @@ public class Main {
 		state.CalculateDistances();
 
 		Algorithm alg = new Algorithm(state.vehicles, state.consumers,
-				state.distance, 100, 53, 500, 1000000, 0.3, 3);
+				state.distance, 100, 53, 500, 2000000, 0.3, 3);
 		alg.init();
 		alg.run();
 
@@ -35,7 +35,9 @@ public class Main {
 
 		SolutionDecoder decoder = new SolutionDecoder(state.consumers,
 				state.producers, state.distance);
-		Solution solution = decoder.decode(best);
+		
+		int[] warehouses = {1, 3, 4};
+		Solution solution = decoder.decode(best, warehouses);
 
 		System.out.println(solution.getPathAssignment().keySet().size() + "\n");
 		
