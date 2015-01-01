@@ -53,7 +53,7 @@ public class Individual implements Comparable<Individual> {
 			}
 
 			for (Integer vehicle : pathAssignment.keySet()) {
-				cost += 1000;
+				cost += 5000;
 				double cycleCost = hamiltonCycleCost(
 						pathAssignment.get(vehicle), vehicle);
 
@@ -143,8 +143,7 @@ public class Individual implements Comparable<Individual> {
 				hamiltonCycle.add(minIndexRight);
 				totalDistance += (int) (minDistanceRight * 100);
 			}
-
-			break;
+ 
 		}
 
 		return totalDistance;

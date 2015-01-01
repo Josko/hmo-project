@@ -2,7 +2,7 @@ package hmo.project.ga;
 
 import java.util.Random;
 
-public class SimpleCrossover implements CrossoverOperator {
+public class OnePointCrossover implements CrossoverOperator {
 
 	@Override
 	public Individual doCrossover(Individual parent1, Individual parent2) {
