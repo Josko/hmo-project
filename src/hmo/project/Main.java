@@ -38,6 +38,7 @@ public class Main {
 		
 		int[] warehouses = {1, 3, 4};
 		Solution solution = decoder.decode(best, warehouses);
+		solution.improve(state.distance, state.producers);
 
 		System.out.println(solution.getPathAssignment().keySet().size() + "\n");
 		
