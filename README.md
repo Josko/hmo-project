@@ -1,7 +1,7 @@
 hmo-project
 ===========
 
-homo project
+hmo project
 
 U Eclipseu:
 
