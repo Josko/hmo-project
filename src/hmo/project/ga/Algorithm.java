@@ -54,8 +54,7 @@ public class Algorithm {
 
 	public void init() {
 		this.crossoverOperators.add(new OnePointCrossover());
-		this.mutationOperators.add(new SimpleMutation(this.mutationProb,
-				this.noTrucks));
+		this.mutationOperators.add(new SimpleMutation(this.mutationProb, this.noTrucks));
 		this.mutationOperators.add(new SwapMutation(this.mutationProb));
 
 		for (int i = 0; i < populationSize; i++) {

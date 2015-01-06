@@ -67,24 +67,4 @@ public class State {
 			++xOffset;
 		}
 	}
-	
-	public int GetCost() {
-		double cost = 0;
-		
-		for (final Producer producer : producers) {
-			for (final Vehicle vehicle : vehicles) {
-				if (vehicle != null && vehicle.GetNumberOfDestinations() > 0 && producer == vehicle.GetOrigin()) {
-					cost += producer.GetCostOfOpening();
-					break;
-				}
-			}
-		}
-		
-		for (final Vehicle vehicle : vehicles) {
-			if (vehicle != null)
-				cost += vehicle.GetCost();
-		}		
-
-		return (int) Math.floor(cost * 100);
-	}
 }

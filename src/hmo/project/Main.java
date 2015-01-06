@@ -10,7 +10,6 @@ import hmo.project.state.State;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
@@ -26,39 +25,41 @@ public class Main {
 
 		state.CalculateDistances();
 
-		Algorithm alg = new Algorithm(state.vehicles, state.consumers,
-				state.distance, 100, 53, 500, 2000000, 0.3, 3);
+		Algorithm alg = new Algorithm(state.vehicles, state.consumers, state.distance, 100, 53, 500, 2000000, 0.3, 3);
 		alg.init();
 		alg.run();
 
 		Individual best = alg.getBestIndividual();
-
-		SolutionDecoder decoder = new SolutionDecoder(state.consumers,
-				state.producers, state.distance);
+		SolutionDecoder decoder = new SolutionDecoder(state.consumers, state.producers, state.distance);
 		
-		int[] warehouses = {1, 3, 4};
-		Solution solution = decoder.decode(best, warehouses);
-		solution.improve(state.distance, state.producers);
-
-		System.out.println(solution.getPathAssignment().keySet().size() + "\n");
+		final int[][] warehouseSets = {	
+								{0, 1, 2},
+								{0, 1, 3},
+								{0, 1, 4},
+								{0, 2, 3},
+								{0, 2, 4},
+								{1, 2, 3},
+								{1, 2, 4},
+								{1, 3, 4}
+							};
 		
-		for (Integer vehicle : solution.getPathAssignment().keySet()) {
-			final List<Integer> cycle = solution.getPathAssignment().get(vehicle);
+		Solution bestSolution = null;
+		double bestCost = Double.MAX_VALUE;
+		
+		for (final int[] warehouses : warehouseSets) {
+			Solution solution = decoder.decode(best, warehouses);
+			solution.improve(state.distance, state.producers);
+			final double cost = solution.getTotalCost(state.distance, state.producers);
 			
-			String cycleString = "";
-			for (Integer city : cycle) {
-				cycleString += city + " ";
+			if (cost < bestCost) {
+				bestSolution = solution;
+				bestCost = cost;
 			}
-			
-			System.out.println(solution.getWarehouseAssignment().get(vehicle) + ":  " + cycleString.trim() + "\n");
 		}
-		
-		System.out.println("\n\n" + solution.getTotalCost(state.distance,
-				state.producers));
 
-		final OutputFormatWriter output = new OutputFormatWriter(new File(
-				args[1]));
+		final OutputFormatWriter output = new OutputFormatWriter(new File(args[1]));
 
-		output.WriteAll(state);
+		output.WriteAll(state, bestSolution);
+		output.WriteAllToStdout(state, bestSolution);
 	}
 }

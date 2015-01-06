@@ -1,7 +1,6 @@
 package hmo.project.output;
 
-import hmo.project.datastruct.Consumer;
-import hmo.project.datastruct.Vehicle;
+import hmo.project.ga.Solution;
 import hmo.project.state.State;
 
 import java.io.BufferedWriter;
@@ -10,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Writer;
 import java.io.OutputStreamWriter;
+import java.util.List;
 
 public class OutputFormatWriter {
 	private Writer output;
@@ -22,42 +22,42 @@ public class OutputFormatWriter {
 		this.output = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile)));
 	}
 	
-	public void WriteAll(final State state) throws IOException {
-		int activeVehicles = 0;
+	public void WriteAll(final State state, final Solution solution) throws IOException {		
+		output.write(solution.getPathAssignment().keySet().size() + System.lineSeparator() + System.lineSeparator());
 		
-		for (Vehicle vehicle : state.vehicles) {
-			if (vehicle != null && vehicle.GetNumberOfDestinations() > 0)
-				++activeVehicles;
+		for (Integer vehicle : solution.getPathAssignment().keySet()) {
+			final List<Integer> cycle = solution.getPathAssignment().get(vehicle);
+			
+			String cycleString = "";
+			
+			for (Integer city : cycle) {
+				cycleString += city + " ";
+			}
+			
+			output.write(solution.getWarehouseAssignment().get(vehicle) + ":  " + cycleString.trim() + System.lineSeparator() + System.lineSeparator());
 		}
 		
-		output.write(Integer.toString(activeVehicles) + System.lineSeparator());
-		
-		output.write(System.lineSeparator());
-		
-		for (Vehicle vehicle : state.vehicles) {
-			if (vehicle != null && vehicle.GetNumberOfDestinations() > 0) {
-				output.write(Integer.toString(vehicle.GetOrigin().GetName()));
-				output.write(": ");
-				
-				for (Consumer destination : vehicle.GetDestinations()) {
-					if (destination == null)
-						break;
-					
-					output.write(" " + Integer.toString(destination.GetName()));
-				}
-				
-				output.write(System.lineSeparator());
-			}			
-		}
-		
-		output.write(System.lineSeparator());
-		output.write(System.lineSeparator());
-		output.write(System.lineSeparator());
-		
-		output.write(Integer.toString(state.GetCost()));
-		output.write(System.lineSeparator());
+		output.write(System.lineSeparator() + System.lineSeparator() + solution.getTotalCost(state.distance, state.producers) + System.lineSeparator());
 		
 		output.flush();
 		output.close();
+	}
+	
+	public void WriteAllToStdout(final State state, final Solution solution) {		
+		System.out.print(solution.getPathAssignment().keySet().size() + System.lineSeparator() + System.lineSeparator());
+		
+		for (Integer vehicle : solution.getPathAssignment().keySet()) {
+			final List<Integer> cycle = solution.getPathAssignment().get(vehicle);
+			
+			String cycleString = "";
+			
+			for (Integer city : cycle) {
+				cycleString += city + " ";
+			}
+			
+			System.out.print(solution.getWarehouseAssignment().get(vehicle) + ":  " + cycleString.trim() + System.lineSeparator() + System.lineSeparator());
+		}
+		
+		System.out.print(System.lineSeparator() + System.lineSeparator() + solution.getTotalCost(state.distance, state.producers) + System.lineSeparator());
 	}
 }
