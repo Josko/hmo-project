@@ -25,11 +25,11 @@ public class Main {
 
 		state.CalculateDistances();
 
-		Algorithm alg = new Algorithm(state.vehicles, state.consumers, state.distance, 100, 53, 1000, 2000000, 0.31, 4);
+		final Algorithm alg = new Algorithm(state.vehicles, state.consumers, state.distance, 100, 53, 1000, 2000000, 0.31, 4);
 		alg.init();
 		alg.run();
 
-		Individual best = alg.getBestIndividual();
+		final Individual best = alg.getBestIndividual();
 		SolutionDecoder decoder = new SolutionDecoder(state.consumers, state.producers, state.distance);
 		
 		final int[][] warehouseSets = {	
@@ -44,12 +44,12 @@ public class Main {
 							};
 		
 		Solution bestSolution = null;
-		double bestCost = Double.MAX_VALUE;
+		int bestCost = Integer.MAX_VALUE;
 		
 		for (final int[] warehouses : warehouseSets) {
-			Solution solution = decoder.decode(best, warehouses);
+			final Solution solution = decoder.decode(best, warehouses);
 			solution.improve(state.distance, state.producers);
-			final double cost = solution.getTotalCost(state.distance, state.producers);
+			final int cost = solution.getTotalCost(state.distance, state.producers);
 			
 			if (cost < bestCost) {
 				bestSolution = solution;
