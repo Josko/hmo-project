@@ -25,7 +25,7 @@ public class Main {
 
 		state.CalculateDistances();
 
-		Algorithm alg = new Algorithm(state.vehicles, state.consumers, state.distance, 100, 53, 500, 2000000, 0.3, 3);
+		Algorithm alg = new Algorithm(state.vehicles, state.consumers, state.distance, 100, 53, 1000, 2000000, 0.31, 4);
 		alg.init();
 		alg.run();
 

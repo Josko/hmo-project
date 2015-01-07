@@ -54,6 +54,7 @@ public class Algorithm {
 
 	public void init() {
 		this.crossoverOperators.add(new OnePointCrossover());
+		this.crossoverOperators.add(new MultiPointCrossover());
 		this.mutationOperators.add(new SimpleMutation(this.mutationProb, this.noTrucks));
 		this.mutationOperators.add(new SwapMutation(this.mutationProb));
 
@@ -71,7 +72,7 @@ public class Algorithm {
 	public void run() {
 		final Random random = new Random();
 		for (int eval = 0; eval < this.evaluations; eval++) {
-			final List<Integer> candidates = new ArrayList<>(tournamentSize);
+			final List<Integer> candidates = new ArrayList<Integer>(tournamentSize);
 			while (candidates.size() < tournamentSize) {
 				int newCandidate = random.nextInt(populationSize);
 				if (!candidates.contains(newCandidate)) {
