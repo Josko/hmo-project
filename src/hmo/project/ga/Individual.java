@@ -48,7 +48,7 @@ public final class Individual implements Comparable<Individual> {
 			}
 
 			for (final Integer vehicle : pathAssignment.keySet()) {
-				cost += 7900;
+				cost += 8500;
 				
 				final double cycleCost = hamiltonCycleCost(pathAssignment.get(vehicle), vehicle);
 

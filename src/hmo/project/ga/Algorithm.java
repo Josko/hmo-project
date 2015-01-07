@@ -62,10 +62,11 @@ public final class Algorithm {
 	}
 
 	public void run() {
-		final Random random = new Random();
+		final Random random = new Random();		
+		final List<Integer> candidates = new ArrayList<Integer>(tournamentSize);
 		
-		for (int eval = 0; eval < this.evaluations; ++eval) {			
-			final List<Integer> candidates = new ArrayList<Integer>(tournamentSize);
+		for (int eval = 0; eval < this.evaluations; ++eval) {
+			candidates.clear();
 			
 			while (candidates.size() < tournamentSize) {
 				final int newCandidate = random.nextInt(populationSize);
@@ -89,35 +90,35 @@ public final class Algorithm {
 			
 			worstIndex = candidates.remove(worstIndex);
 
-			int bestIndex = 0;
-			double bestFitness = population.get(candidates.get(0)).getFitness();
-			int secondBestIndex = 1;
-			double secondBestFitness = population.get(candidates.get(1)).getFitness();
+			Individual bestParent = population.get(candidates.get(0));
+			double bestFitness = bestParent.getFitness();
+			Individual secondBestParent = population.get(candidates.get(1));
+			double secondBestFitness = secondBestParent.getFitness();
 
 			for (int i = 2; i < candidates.size(); ++i) {
-				final double fitness = population.get(candidates.get(i)).getFitness();
+				final Individual individual = population.get(candidates.get(i));
+				final double fitness = individual.getFitness();
 				
 				if (fitness < bestFitness) {
-					bestIndex = i;
+					bestParent = individual;
 					bestFitness = fitness;
 				} else if (fitness < secondBestFitness) {
-					secondBestIndex = i;
+					secondBestParent = individual;
 					secondBestFitness = fitness;
 				}
 			}
-			
-			final Individual firstParent = this.population.get(bestIndex);
-			final Individual secondParent = this.population.get(secondBestIndex);
 
 			this.population.remove(worstIndex);
 
-			final Individual child = crossoverOperators.get(random.nextInt(crossoverOperators.size())).doCrossover(firstParent, secondParent);
+			final Individual child = crossoverOperators.get(random.nextInt(crossoverOperators.size())).doCrossover(bestParent, secondBestParent);
 			mutationOperators.get(random.nextInt(mutationOperators.size())).mutate(child);
 			this.population.add(child);
+			
+			final double childFitness = child.getFitness();
 
-			if (child.getFitness() < this.bestFitness) {
-				this.bestFitness = child.getFitness();
+			if (childFitness < this.bestFitness) {
 				this.bestIndividual = child;
+				this.bestFitness = childFitness;
 			}
 		}
 	}

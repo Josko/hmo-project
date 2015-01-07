@@ -24,7 +24,7 @@ public final class Main {
 		final StartingState startingState = input.ReadAll();
 		startingState.CalculateDistances();
 
-		final Algorithm alg = new Algorithm(startingState.consumers, startingState.distance, 100, 53, 1000, 2000000, 0.31, 4);
+		final Algorithm alg = new Algorithm(startingState.consumers, startingState.distance, 100, 53, 1000, 3500000, 0.31, 4);
 		alg.init();
 		alg.run();
 
