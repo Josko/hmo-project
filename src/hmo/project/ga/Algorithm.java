@@ -79,9 +79,11 @@ public final class Algorithm {
 			double worstFitness = population.get(candidates.get(0)).getFitness();
 			
 			for (int i = 1; i < candidates.size(); ++i) {
-				if (population.get(candidates.get(i)).getFitness() > worstFitness) {
+				final double fitness = population.get(candidates.get(i)).getFitness();
+				
+				if (fitness > worstFitness) {
 					worstIndex = i;
-					worstFitness = population.get(candidates.get(i)).getFitness();
+					worstFitness = fitness;
 				}
 			}
 			
@@ -93,14 +95,17 @@ public final class Algorithm {
 			double secondBestFitness = population.get(candidates.get(1)).getFitness();
 
 			for (int i = 2; i < candidates.size(); ++i) {
-				if (population.get(candidates.get(i)).getFitness() < bestFitness) {
+				final double fitness = population.get(candidates.get(i)).getFitness();
+				
+				if (fitness < bestFitness) {
 					bestIndex = i;
-					bestFitness = population.get(candidates.get(i)).getFitness();
-				} else if (population.get(candidates.get(i)).getFitness() < secondBestFitness) {
+					bestFitness = fitness;
+				} else if (fitness < secondBestFitness) {
 					secondBestIndex = i;
-					secondBestFitness = population.get(candidates.get(i)).getFitness();
+					secondBestFitness = fitness;
 				}
 			}
+			
 			final Individual firstParent = this.population.get(bestIndex);
 			final Individual secondParent = this.population.get(secondBestIndex);
 
