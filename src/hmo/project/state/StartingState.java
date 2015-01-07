@@ -29,7 +29,7 @@ public final class StartingState {
 			totalConsumerCapacity += consumer.getResourcesNeeded();
 		}
 		
-		System.out.println("Consumer capacity: " + totalConsumerCapacity + " (minimum of " + (int)Math.ceil((double)totalConsumerCapacity / 70) +" vehicles)");
+		System.out.println("Consumer capacity: " + totalConsumerCapacity + " (minimum of " + (int)Math.ceil((double)totalConsumerCapacity / 70) +" vehicles)\n");
 	}
 	
 	public void CalculateDistances() {
