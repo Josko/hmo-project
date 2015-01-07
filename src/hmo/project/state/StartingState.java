@@ -1,21 +1,19 @@
 package hmo.project.state;
 
+import java.util.Arrays;
+
 import hmo.project.datastruct.Consumer;
-import hmo.project.datastruct.Vehicle;
 import hmo.project.datastruct.Producer;
 
-public class State {
+public final class StartingState {
 	public final Consumer[] consumers;
 	public final Producer[] producers;
-	public Vehicle[] vehicles;
 	
 	public double[][] distance;
 	
-	public State(final Producer[] producers, final Consumer[] consumers, final int vehicleCapacity, final int vehicleCost) {
+	public StartingState(final Producer[] producers, final Consumer[] consumers) {
 		this.producers = producers;
 		this.consumers = consumers;
-		
-		// calculate max possible number of vehicles
 		
 		int totalProducerCapacity = 0;
 		
@@ -23,9 +21,15 @@ public class State {
 			totalProducerCapacity += producer.GetCapacity();
 		}
 		
-		final int maxVehicleNumber =  (int) Math.ceil((double)totalProducerCapacity / (double)vehicleCapacity);
+		System.out.println("Producer capacity: " + totalProducerCapacity);
 		
-		this.vehicles = new Vehicle[maxVehicleNumber];
+		int totalConsumerCapacity = 0;
+		
+		for (final Consumer consumer : consumers) {
+			totalConsumerCapacity += consumer.getResourcesNeeded();
+		}
+		
+		System.out.println("Consumer capacity: " + totalConsumerCapacity + " (minimum of " + (int)Math.ceil((double)totalConsumerCapacity / 70) +" vehicles)");
 	}
 	
 	public void CalculateDistances() {
@@ -66,5 +70,10 @@ public class State {
 			
 			++xOffset;
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return Arrays.toString(producers) + "\n" + Arrays.toString(consumers);
 	}
 }

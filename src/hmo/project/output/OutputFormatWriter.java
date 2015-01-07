@@ -1,7 +1,7 @@
 package hmo.project.output;
 
 import hmo.project.ga.Solution;
-import hmo.project.state.State;
+import hmo.project.state.StartingState;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,7 +11,7 @@ import java.io.Writer;
 import java.io.OutputStreamWriter;
 import java.util.List;
 
-public class OutputFormatWriter {
+public final class OutputFormatWriter {
 	private Writer output;
 	
 	public OutputFormatWriter(File outputFile) throws IOException {
@@ -22,7 +22,7 @@ public class OutputFormatWriter {
 		this.output = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile)));
 	}
 	
-	public void WriteAll(final State state, final Solution solution) throws IOException {		
+	public void WriteAll(final StartingState state, final Solution solution) throws IOException {		
 		output.write(solution.getPathAssignment().keySet().size() + System.lineSeparator() + System.lineSeparator());
 		
 		for (Integer vehicle : solution.getPathAssignment().keySet()) {
@@ -43,7 +43,7 @@ public class OutputFormatWriter {
 		output.close();
 	}
 	
-	public void WriteAllToStdout(final State state, final Solution solution) {		
+	public void WriteAllToStdout(final StartingState state, final Solution solution) {		
 		System.out.print(solution.getPathAssignment().keySet().size() + System.lineSeparator() + System.lineSeparator());
 		
 		for (Integer vehicle : solution.getPathAssignment().keySet()) {

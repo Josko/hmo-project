@@ -6,12 +6,12 @@ import hmo.project.ga.Solution;
 import hmo.project.ga.SolutionDecoder;
 import hmo.project.input.InputFormatReader;
 import hmo.project.output.OutputFormatWriter;
-import hmo.project.state.State;
+import hmo.project.state.StartingState;
 
 import java.io.File;
 import java.io.IOException;
 
-public class Main {
+public final class Main {
 	public static void main(String[] args) throws IOException {
 
 		if (args.length != 2) {
@@ -21,16 +21,15 @@ public class Main {
 
 		final InputFormatReader input = new InputFormatReader(new File(args[0]));
 
-		final State state = input.ReadAll();
+		final StartingState startingState = input.ReadAll();
+		startingState.CalculateDistances();
 
-		state.CalculateDistances();
-
-		final Algorithm alg = new Algorithm(state.vehicles, state.consumers, state.distance, 100, 53, 1000, 2000000, 0.31, 4);
+		final Algorithm alg = new Algorithm(startingState.consumers, startingState.distance, 100, 53, 1000, 2000000, 0.31, 4);
 		alg.init();
 		alg.run();
 
 		final Individual best = alg.getBestIndividual();
-		SolutionDecoder decoder = new SolutionDecoder(state.consumers, state.producers, state.distance);
+		final SolutionDecoder decoder = new SolutionDecoder(startingState.consumers, startingState.producers, startingState.distance);
 		
 		final int[][] warehouseSets = {	
 								{0, 1, 2},
@@ -48,8 +47,8 @@ public class Main {
 		
 		for (final int[] warehouses : warehouseSets) {
 			final Solution solution = decoder.decode(best, warehouses);
-			solution.improve(state.distance, state.producers);
-			final int cost = solution.getTotalCost(state.distance, state.producers);
+			solution.improve(startingState.distance, startingState.producers);
+			final int cost = solution.getTotalCost(startingState.distance, startingState.producers);
 			
 			if (cost < bestCost) {
 				bestSolution = solution;
@@ -58,8 +57,7 @@ public class Main {
 		}
 
 		final OutputFormatWriter output = new OutputFormatWriter(new File(args[1]));
-
-		output.WriteAll(state, bestSolution);
-		output.WriteAllToStdout(state, bestSolution);
-	}
+		output.WriteAll(startingState, bestSolution);
+		output.WriteAllToStdout(startingState, bestSolution);
+	}	
 }

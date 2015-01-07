@@ -2,13 +2,13 @@ package hmo.project.input;
 
 import hmo.project.datastruct.Consumer;
 import hmo.project.datastruct.Producer;
-import hmo.project.state.State;
+import hmo.project.state.StartingState;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class InputFormatReader {
+public final class InputFormatReader {
 	private Scanner input;
 	
 	public InputFormatReader(File inputFile) {
@@ -21,7 +21,7 @@ public class InputFormatReader {
 		}
 	}
 	
-	public State ReadAll() throws IOException {
+	public StartingState ReadAll() throws IOException {
 		final int consumerNumber = Integer.parseInt(input.nextLine());		
 		final int producerNumber = Integer.parseInt(input.nextLine());
 		
@@ -35,7 +35,7 @@ public class InputFormatReader {
 			final int x = Integer.parseInt(coordinates[0]);
 			final int y = Integer.parseInt(coordinates[1]);
 			
-			producers[i] = new Producer(i + 1, x, y); 
+			producers[i] = new Producer(x, y); 
 		}		
 		
 		input.nextLine();
@@ -48,12 +48,14 @@ public class InputFormatReader {
 			final int x = Integer.parseInt(coordinates[0]);
 			final int y = Integer.parseInt(coordinates[1]);
 			
-			consumers[i] = new Consumer(i, x, y);
+			consumers[i] = new Consumer(x, y);
 		}		
 		
 		input.nextLine();
 		
-		final int deliveryVehicleCapacity = Integer.parseInt(input.nextLine());
+		/* ignore vehicle capacity, we set it to constant 70 */
+		
+		input.nextLine();
 		
 		input.nextLine();
 		
@@ -75,12 +77,14 @@ public class InputFormatReader {
 		
 		input.nextLine();
 		
-		final int deliveryVehicleInitalCost = Integer.parseInt(input.nextLine());
+		/* ignore initial cost, we set it to constant 1000 */
+		
+		input.nextLine();
 
 		/* ignore the rest of the file */		
 		
 		this.input.close();
 		
-		return new State(producers, consumers, deliveryVehicleCapacity, deliveryVehicleInitalCost);
+		return new StartingState(producers, consumers);
 	}
 }

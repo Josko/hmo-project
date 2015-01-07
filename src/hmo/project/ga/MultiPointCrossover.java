@@ -2,15 +2,15 @@ package hmo.project.ga;
 
 import java.util.Random;
 
-public class MultiPointCrossover implements CrossoverOperator {
+public final class MultiPointCrossover implements CrossoverOperator {
 
 	@Override
-	public Individual doCrossover(Individual parent1, Individual parent2) {
-		Individual child = new Individual(parent1.elements.length, parent1.maxValue, parent1.vehicles, parent1.consumers, parent1.distance);
+	public Individual doCrossover(final Individual parent1, final Individual parent2) {
+		final Individual child = new Individual(parent1.elements.length, parent1.maxValue, parent1.consumers, parent1.distance);
 
 		final Random random = new Random();
 		
-		final int crossoverPartitionSize = random.nextInt(parent1.elements.length - 1) + 1;
+		final int crossoverPartitionSize = random.nextInt(parent1.elements.length) + 1;
 		
 		Individual currentParent = random.nextInt(2) == 0 ? parent1 : parent2;
 		

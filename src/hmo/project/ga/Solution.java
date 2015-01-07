@@ -9,37 +9,35 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class Solution {
+public final class Solution {
 
-	private Map<Integer, List<Integer>> pathAssignment;
-	private Map<Integer, Integer> warehouseAssignment;
+	final private Map<Integer, List<Integer>> pathAssignment;
+	final private Map<Integer, Integer> warehouseAssignment;
 
-	public Solution(final Map<Integer, List<Integer>> pathAssignment,
-			final Map<Integer, Integer> warehouseAssignment) {
+	public Solution(final Map<Integer, List<Integer>> pathAssignment, final Map<Integer, Integer> warehouseAssignment) {
 		super();
 		this.pathAssignment = pathAssignment;
 		this.warehouseAssignment = warehouseAssignment;
 	}
 
-	public int getTotalCost(final double[][] distance,
-			final Producer[] producers) {
+	public int getTotalCost(final double[][] distance, final Producer[] producers) {
 		int cost = 0;
-
 		final Set<Integer> warehouses = new HashSet<Integer>();
-		for (Integer vehicle : pathAssignment.keySet()) {
+		
+		for (final Integer vehicle : pathAssignment.keySet()) {
 			cost += 1000;
 
 			final List<Integer> cycle = pathAssignment.get(vehicle);
 			cost += getCycleCost(cycle, distance);
 
-			int warehouse = warehouseAssignment.get(vehicle);
+			final int warehouse = warehouseAssignment.get(vehicle);
 			cost += (int) (distance[warehouse][cycle.get(0) + 5] * 100);
 			cost += (int) (distance[warehouse][cycle.get(cycle.size() - 1) + 5] * 100);
 
 			warehouses.add(warehouse);
 		}
 
-		for (Integer warehouse : warehouses) {
+		for (final Integer warehouse : warehouses) {
 			cost += producers[warehouse].GetCostOfOpening();
 		}
 
@@ -54,8 +52,7 @@ public class Solution {
 		return warehouseAssignment;
 	}
 
-	private int getCycleCost(final List<Integer> cycle,
-			final double[][] distance) {
+	private int getCycleCost(final List<Integer> cycle, final double[][] distance) {
 		int cost = 0;
 
 		for (int i = 0; i < cycle.size() - 1; i++) {
@@ -86,22 +83,17 @@ public class Solution {
 		}
 	}
 
-	private void makePermutations(final List<Integer> original,
-			final List<Integer> permutation,
-			final List<List<Integer>> permutations) {
+	private void makePermutations(final List<Integer> original, final List<Integer> permutation, final List<List<Integer>> permutations) {
 		if (permutation.size() < original.size()) {
 			for (int i = 0; i < original.size(); i++) {
 				int current = original.get(i);
 
 				if (!permutation.contains(current)) {
-					final List<Integer> newPermutation = new ArrayList<Integer>(
-							permutation);
+					final List<Integer> newPermutation = new ArrayList<Integer>(permutation);
 					newPermutation.add(current);
-
 					makePermutations(original, newPermutation, permutations);
 				}
 			}
-
 		} else {
 			permutations.add(permutation);
 		}

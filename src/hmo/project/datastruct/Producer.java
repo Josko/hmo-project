@@ -1,25 +1,19 @@
 package hmo.project.datastruct;
 
-public class Producer {
-	
-	private static final long serialVersionUID = 349426006838552905L;
-	
+public final class Producer {	
 	final public int x;
 	final public int y;
-	final private int name;
 	
 	private int capacity;
 	private int costOfOpening;
 
-	public Producer(final int name, final int x, final int y, final int capacity) {
-		this.name = name;
+	public Producer(final int x, final int y, final int capacity) {
 		this.x = x;
 		this.y = y;
 		this.capacity = capacity;
 	}
 	
-	public Producer(final int name, final int x, final int y) {
-		this.name = name;
+	public Producer(final int x, final int y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -34,10 +28,6 @@ public class Producer {
 	
 	public int GetCostOfOpening() {
 		return this.costOfOpening;
-	}
-	
-	public int GetName() {
-		return this.name;
 	}
 	
 	public int GetCapacity() {
