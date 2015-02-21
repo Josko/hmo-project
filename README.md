@@ -24,34 +24,37 @@ Afterwards try all variations of connecting these paths to warehouses and get th
 Results
 =======
 
-Our best result calculated with this program used 25 vehicles as follows:
+The result is given in the following format:
 
-<warehouse index>: <list of consumers visited>
-1:  17 62 77 32
-1:  6 96 85 16
-1:  0 43 38 75
-1:  11 21 83 39
-1:  9 1 50 84
-0:  33 29 8 91
-1:  27 45 35 7 56
-4:  34 61 67 37
-4:  74 48 72 92
-1:  13 26 94 30
-4:  5 82 10 70
-4:  25 15 44 73
-0:  2 55 65 89
-4:  19 93 60 63
-1:  46 20 40 90
-1:  52 98 51 97
-4:  23 42 69
-1:  31 14 81 64
-4:  57 53 4 76
-4:  18 99 79 49
-4:  24 86 8
-4:  22 58 71 3 41
-0:  80 68 54 88
-4:  12 95 59 66
-0:  36 28 47 78
+> <warehouse index>: <list of consumers visited>
+
+Our best result calculated with this program used 25 vehicles:
+
+> 1:  17 62 77 32
+> 1:  6 96 85 16
+> 1:  0 43 38 75
+> 1:  11 21 83 39
+> 1:  9 1 50 84
+> 0:  33 29 8 91
+> 1:  27 45 35 7 56
+> 4:  34 61 67 37
+> 4:  74 48 72 92
+> 1:  13 26 94 30
+> 4:  5 82 10 70
+> 4:  25 15 44 73
+> 0:  2 55 65 89
+> 4:  19 93 60 63
+> 1:  46 20 40 90
+> 1:  52 98 51 97
+> 4:  23 42 69
+> 1:  31 14 81 64
+> 4:  57 53 4 76
+> 4:  18 99 79 49
+> 4:  24 86 8
+> 4:  22 58 71 3 41
+> 0:  80 68 54 88
+> 4:  12 95 59 66
+> 0:  36 28 47 78
 
 This had a total score of 282638. While the current record is about 274k.
 
