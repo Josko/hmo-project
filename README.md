@@ -18,7 +18,7 @@ Solution
 ========
 
 This solution used a genethic algorithm to create Hamiltonian paths with lowest costs and then iterate on that.
-At the end of the GA we get the individual wit hthe best fitness and do a local search to improve the solution.
+At the end of the GA we get the individual with the best fitness and do a local search to improve the solution.
 Afterwards try all variations of connecting these paths to warehouses and get the one with the lowest score.
 
 Results
